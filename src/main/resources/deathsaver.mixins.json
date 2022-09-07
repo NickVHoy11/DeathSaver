@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "minVersion": "0.8",
   "package": "net.nickvhoy11.deathsaver.mixin",
   "compatibilityLevel": "JAVA_17",

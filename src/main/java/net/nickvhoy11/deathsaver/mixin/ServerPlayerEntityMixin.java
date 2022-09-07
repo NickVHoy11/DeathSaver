@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static net.nickvhoy11.deathsaver.DeathSaver.LOGGER;
+import net.minecraft.text.Text;
 
 
 @Mixin(ServerPlayerEntity.class)
@@ -13,8 +14,17 @@ public class ServerPlayerEntityMixin {
 
     @Inject(at = @At("HEAD"),method = "onDeath")
     private void onDeath(DamageSource damageSource,CallbackInfo info) {
-        LOGGER.info(String.valueOf(((ServerPlayerEntity)(Object)this).getPos()));
+        String xpos = String.valueOf((int)(((ServerPlayerEntity)(Object)this).prevX));
+        String ypos = String.valueOf((int)(((ServerPlayerEntity)(Object)this).prevY));
+        String zpos = String.valueOf((int)(((ServerPlayerEntity)(Object)this).prevZ));
+        //String pname = ((ServerPlayerEntity)(Object)this).getPlayerListName().toString();
+        //pname+"died at "+
+        String finalStr = "["+xpos+","+ypos+","+zpos+"]";
+
+        LOGGER.info(finalStr);
+        ((ServerPlayerEntity)(Object)this).getServer().getPlayerManager().broadcast(Text.literal(finalStr),false);
     }
 }
+
 
 
